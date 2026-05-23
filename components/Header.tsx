@@ -5,12 +5,12 @@ import Image from "next/image"
 import { usePathname } from "next/navigation";
 
 const Header = () => {
-    const pathname = usePathname();
+    const pathname = usePathname(); 
   return (
     <header>
         <div className="main-container inner">
             <Link href="/">
-                <Image src="logo.svg" alt="Coinpulse logo" width={132} height={40}/>
+                <Image src="/logo.svg" alt="Coinpulse logo" width={132} height={40}/>
             </Link>
  
             <nav>
