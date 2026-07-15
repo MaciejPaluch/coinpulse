@@ -53,24 +53,29 @@ export const TrendingCoins = async () => {
       cell: (coin) => formatCurrency(coin.item.data.price),
     },
   ];
-  const trendingCoins = await fetcher<{ coins: TrendingCoin[] }>(
-    "/search/trending",
-    undefined,
-    300,
-  );
+  let trendingCoins;
+  try {
+    trendingCoins = await fetcher<{ coins: TrendingCoin[] }>(
+      "/search/trending",
+      undefined,
+      300,
+    );
+  } catch (error) {
+    console.error("Failed to fetch rending Coins overview:", error);
+    return <div>Failed to load trending Coins overview</div>;
+  }
+
   return (
     <div id="trending-coins">
       <p>Trending Coins</p>
-      <div id="trending-coins">
-        <DataTable
-          data={trendingCoins.coins.slice(0, 6) || []}
-          columns={columns}
-          rowKey={(coin) => coin.item.id}
-          tableClassName="trending-coins-table"
-          headerCellClassName="py-3!"
-          bodyCellClassName="py-2!"
-        />
-      </div>
+      <DataTable
+        data={trendingCoins.coins.slice(0, 6) || []}
+        columns={columns}
+        rowKey={(coin) => coin.item.id}
+        tableClassName="trending-coins-table"
+        headerCellClassName="py-3!"
+        bodyCellClassName="py-2!"
+      />
     </div>
   );
 };
