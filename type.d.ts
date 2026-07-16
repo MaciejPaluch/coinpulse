@@ -13,8 +13,8 @@ interface CandlestickChartProps {
   children?: React.ReactNode;
   mode?: "historical" | "live";
   initialPeriod?: Period;
-  liveInterval: "1s" | "1m";
-  setLiveInterval: (interval: "1s" | "1m") => void;
+  liveInterval?: "1s" | "1m";
+  setLiveInterval?: (interval: "1s" | "1m") => void;
 }
 
 interface ConverterProps {
@@ -313,6 +313,8 @@ interface SearchItemProps {
 
 interface CoinGeckoErrorBody {
   error?: string;
+  error_code?: number;
+  status?: { error_message?: string };
 }
 
 type QueryParams = Record<string, string | number | boolean | undefined>;
