@@ -20,7 +20,7 @@ export async function fetcher<T>(
 
   const response = await fetch(url, {
     headers: {
-      "x-cg-pro-api-key": API_KEY,
+      "x-cg-demo-api-key": API_KEY,
       "Content-type": "application/json",
     } as Record<string, string>,
     next: { revalidate },
@@ -31,7 +31,11 @@ export async function fetcher<T>(
       .json()
       .catch(() => ({}));
     throw new Error(
-      `API Error ${response.status}: ${errorBody.error || response.statusText}`,
+      `API Error ${response.status}: ${
+        errorBody.error ||
+        errorBody.status?.error_message ||
+        response.statusText
+      }`,
     );
   }
   return response.json();
