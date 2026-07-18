@@ -4,7 +4,7 @@ import DataTable from "@/components/DataTable";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { cn, formatCurrency } from "@/lib/utils";
+import { cn, formatCurrency, formatPercentage } from "@/lib/utils";
 
 export const TrendingCoins = async () => {
   const columns: DataTableColumn<TrendingCoin>[] = [
@@ -35,13 +35,13 @@ export const TrendingCoins = async () => {
               isTrendinUp ? "text-green-500" : "text-red-500",
             )}
           >
-            <p>
+            <p className="flex items-center">
+              {formatPercentage(item.data.price_change_percentage_24h.usd)}
               {isTrendinUp ? (
                 <TrendingUp width={16} height={16} />
               ) : (
                 <TrendingDown width={16} height={16} />
               )}
-              {Math.abs(item.data.price_change_percentage_24h.usd).toFixed(2)}%
             </p>
           </div>
         );
@@ -67,7 +67,7 @@ export const TrendingCoins = async () => {
 
   return (
     <div id="trending-coins">
-      <p>Trending Coins</p>
+      <h4>Trending Coins</h4>
       <DataTable
         data={trendingCoins.coins.slice(0, 6) || []}
         columns={columns}
