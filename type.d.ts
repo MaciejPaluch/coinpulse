@@ -235,14 +235,15 @@ interface LiveDataProps {
   coin: CoinDetailsData;
   coinOHLCData?: OHLCData[];
   children?: React.ReactNode;
+  network: string | null;
 }
 
 interface LiveCoinHeaderProps {
   name: string;
   image: string;
-  livePrice?: number;
-  livePriceChangePercentage24h: number;
-  priceChangePercentage30d: number;
+  price?: number;
+  pricePercentageChange: number;
+  pricePercentageChange30d: number;
   priceChange24h: number;
 }
 
@@ -254,10 +255,9 @@ interface Category {
   volume_24h: number;
 }
 
-interface UseCoinGeckoWebSocketProps {
-  coinId: string;
-  poolId: string;
-  liveInterval?: "1s" | "1m";
+interface UseCoinGeckoPooling {
+  network: string | null;
+  poolId: string | null;
 }
 
 interface UseCoinGeckoWebSocketReturn {
@@ -321,7 +321,48 @@ type QueryParams = Record<string, string | number | boolean | undefined>;
 
 interface PoolData {
   id: string;
-  address: string;
-  name: string;
-  network: string;
+  type: string;
+  attributes: {
+    address: string;
+    name: string;
+  };
+}
+
+interface TradeAttributes {
+  block_number: number;
+  tx_hash: string;
+  tx_from_address: string;
+  from_token_amount: string;
+  to_token_amount: string;
+  price_from_in_currency_token: string;
+  price_to_in_currency_token: string;
+  price_from_in_usd: string;
+  price_to_in_usd: string;
+  block_timestamp: string;
+  kind: string;
+  volume_in_usd: string;
+  from_token_address: string;
+  to_token_address: string;
+}
+
+interface TradeData {
+  id: string;
+  type: string;
+  attributes: TradeAttributes;
+}
+
+interface ResponseTrade {
+  data: TradeData[];
+}
+
+interface CoinDetail {
+  label: string;
+  value: string;
+  link?: string;
+  linkText?: string;
+}
+
+interface CoinDetailsProps {
+  coin: CoinDetailsData;
+  coinDetails: CoinDetail[];
 }
